@@ -1,1 +1,18 @@
-asddf
+image:
+  file: Dockerfile
+  
+  
+tasks:
+  -  command: mkdir /workspace/my-gitpod-of-spleeter/logs                                                                    &&
+              echo "Starting .gitpod.yml installation" &>>  /workspace/my-gitpod-of-spleeter/logs/gitpod-install-log.txt     &&
+              
+            
+            
+            
+            
+            
+            
+            
+              echo "Ending .gitpod.yml installation"  &>>   /workspace/my-gitpod-of-spleeter/logs/gitpod-install-log.txt    
+              
+              
