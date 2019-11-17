@@ -9,11 +9,4 @@ tasks:
 - command: pyenv global 3.7.4 &&
            chmod +x envconfig.sh 
             
-            
-            
-            
-            
-            
-              echo "Ending .gitpod.yml installation"  &>>   /workspace/my-gitpod-of-spleeter/logs/gitpod-install-log.txt    
-              
-              
+   
