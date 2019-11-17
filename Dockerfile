@@ -1,57 +1,35 @@
-
 FROM gitpod/workspace-full:latest
 
 USER root
+# Install util tools.
+RUN apt-get update \
+ && apt-get install -y \
+  apt-utils \
+  sudo \
+  git \
+  less \
+  wget
 
-
-
-RUN apt-get update                                                                  \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends    \                                                             
-          libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1    \
-          libxcomposite1 libasound2 libxi6 libxtst6
-
-
-
-
-
-# install tensorflow
-RUN conda install -y tensorflow==1.14.0
-
-# install ffmpeg for audio loading/writing
-RUN conda  install -y -c conda-forge ffmpeg
-
-# install extra python libraries
-RUN conda install -y -c anaconda pandas==0.25.1
-RUN conda install -y -c conda-forge libsndfile
-
-# install ipython
-RUN conda install -y ipython
-
-WORKDIR /workspace/
-COPY ./ spleeter/
-
-RUN mkdir /cache/
-
-WORKDIR /workspace/spleeter
-RUN pip install .
-
-
-
-
-USER gitpod
+RUN mkdir -p /workspace/data \
+    && chown -R gitpod:gitpod /workspace/data
   
-RUN mkdir -p /home/gitpod/logs                                                                            \ 
-    && touch /home/gitpod/logs/myDockerlog.txt                                                            \
-    && echo "Installation start, made some folders in /home/gitpod" >> /home/gitpod/logs/myDockerlog.txt  \
-    && echo "Installation end"                                      >> /home/gitpod/logs/myDockerlog.txt  
-   
+RUN mkdir /home/gitpod/.conda
+# Install conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc
+    
+RUN chown -R gitpod:gitpod /opt/conda \
+    && chmod -R 777 /opt/conda \
+    && chown -R gitpod:gitpod /home/gitpod/.conda \
+    && chmod -R 777 /home/gitpod/.conda
+
 
 # Give back control
 USER root
 
-
 # Cleaning
-RUN apt-get clean  && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
-
-
-
+RUN apt-get clean
