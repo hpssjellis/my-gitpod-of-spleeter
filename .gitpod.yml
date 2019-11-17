@@ -1,12 +1,13 @@
 image:
   file: Dockerfile
-  
-  
+ports:
+- port: 8050
+  onOpen: open-preview
+- port: 8888
+  onOpen: open-browser
 tasks:
-  -  command: mkdir /workspace/my-gitpod-of-spleeter/logs                                                                    &&
-              echo "Starting .gitpod.yml installation" &>>  /workspace/my-gitpod-of-spleeter/logs/gitpod-install-log.txt     &&
-              
-            
+- command: pyenv global 3.7.4 &&
+           chmod +x envconfig.sh 
             
             
             
