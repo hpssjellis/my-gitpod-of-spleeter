@@ -8,7 +8,9 @@ ports:
 tasks:
 - command: pyenv global 3.7.4 &&
            chmod +x envconfig.sh
-           ln -s /opt/conda/bin  /workspace/conda-bin
+           ln -s /opt/conda/bin  /workspace/my-gitpod-of-spleeter/opt-conda-bin
+           ln -s /workspace/conda/arcw/bin  /workspace/my-gitpod-of-spleeter/conda-arcw-bin
+           
 
             
    
