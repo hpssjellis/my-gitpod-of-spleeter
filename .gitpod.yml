@@ -8,6 +8,10 @@ ports:
 tasks:
 - command: pyenv global 3.7.4 &&
            chmod +x envconfig.sh
+           git clone https://github.com/Deezer/spleeter
+           conda env create -f spleeter/conda/spleeter-cpu.yaml
+           conda activate spleeter-cpu
+           spleeter separate -i spleeter/audio_example.mp3 -p spleeter:2stems -o output   
            ln -s /opt/conda/bin  /workspace/my-gitpod-of-spleeter/opt-conda-bin
            ln -s /workspace/conda/arcw/bin  /workspace/my-gitpod-of-spleeter/conda-arcw-bin
            
